@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honest Pick — Curated Finds</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toastMsg">Added to cart!</span>
+</div>
+
+<!-- SEARCH OVERLAY POPUP -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <div class="search-modal-top">
+      <div class="search-modal-input-wrap">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="searchModalInput" placeholder="Search products, categories…" oninput="liveSearch(this.value)" autocomplete="off">
+        <span class="search-clear" id="searchClear" onclick="clearSearch()">✕</span>
+      </div>
+      <button class="search-close-btn" onclick="closeSearch()">Close</button>
+    </div>
+
+    <div class="search-trending" id="searchTrending">
+      <p class="search-label">Trending Searches</p>
+      <div class="trending-tags">
+        <span onclick="doSearch('USB Hub')">USB Hub</span>
+        <span onclick="doSearch('Wallet')">Slim Wallet</span>
+        <span onclick="doSearch('Speaker')">Bluetooth Speaker</span>
+        <span onclick="doSearch('Skincare')">Skincare</span>
+        <span onclick="doSearch('Tote')">Canvas Tote</span>
+        <span onclick="doSearch('Iron')">Garment Iron</span>
+      </div>
+    </div>
+
+    <div class="search-results" id="searchResults" style="display:none">
+      <p class="search-label" id="searchResultLabel">Results</p>
+      <div class="search-results-grid" id="searchResultsGrid"></div>
+    </div>
+
+    <div class="search-empty" id="searchEmpty" style="display:none">
+      <div class="search-empty-icon">🔍</div>
+      <p>No results for this search</p>
+      <small>Try a different keyword</small>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header id="header">
+<a href="#" class="logo">
+  <span class="logo-mark">
+    <img src="logo.png" alt="Honest Pick">
+  </span>
+  <span class="logo-text">Honest<em>Pick</em></span>
+</a>
+
+  <nav>
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#picks">Top Picks</a>
+  </nav>
+
+  <div class="header-right">
+    <button class="icon-btn" id="searchTrigger" onclick="openSearch()" title="Search">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    </button>
+    <button class="cart-btn" onclick="openCart()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <span>Cart</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-pill">
+        <span class="pill-dot"></span> New arrivals every week
+      </div>
+      <h1>Things <br><em>worth buying.</em>Scroll down</h1>
+      <p class="hero-sub">No fluff. No filler. Handpicked products tested and loved — sourced directly from AliExpress at honest prices.</p>
+      <div class="hero-cta">
+        <button class="cta-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+          Explore Picks
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="cta-ghost" onclick="openSearch()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Search Products
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>500+</strong><span>Happy Customers</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><strong>4.8★</strong><span>Avg Rating</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><strong>51</strong><span>Curated Picks</span></div>
+      </div>
+    </div>
+
+    <!-- HERO Product Grid -->
+<div class="hero-product-grid">
+  <div class="hero-mini-card">
+    <div class="hmc-img"><img src="image 3.jpg" alt="Garment Steamer"></div>
+    <div class="hmc-info">
+      <p class="hmc-name">+7pcs Straps Smart Watch 1.52</p>
+      <div class="hmc-price"><span>$06.99</span><s>$15.00</s><span class="hmc-save">-18%</span></div>
+      <a href="https://s.click.aliexpress.com/e/_c3AIu6Il" target="_blank" class="hmc-btn">AliExpress ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-mini-card">
+    <div class="hmc-img"><img src="image2.avif" alt="USB-C Hub"></div>
+    <div class="hmc-info">
+      <p class="hmc-name">USB-C Hub 6-in-1</p>
+      <div class="hmc-price"><span>$22.50</span><s>$53.00</s><span class="hmc-save">-57%</span></div>
+      <a href="https://s.click.aliexpress.com/e/_c4MWe9WP" target="_blank" class="hmc-btn">AliExpress ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-mini-card">
+    <div class="hmc-img"><img src="image 2.avif" alt="Tripod"></div>
+    <div class="hmc-info">
+      <p class="hmc-name">Bag Sealing Machine Rechargeable</p>
+      <div class="hmc-price"><span>$3.80</span><s>$9.85</s><span class="hmc-save">-61%</span></div>
+      <a href="https://s.click.aliexpress.com/e/_c3N5if5X" target="_blank" class="hmc-btn">AliExpress ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-mini-card">
+    <div class="hmc-img"><img src="image1.png" alt="Smart Watch"></div>
+    <div class="hmc-info">
+      <p class="hmc-name">Garment Steamer</p>
+      <div class="hmc-price"><span>$89.49</span><s>$110.00</s><span class="hmc-save">-18%</span></div>
+      <a href="https://s.click.aliexpress.com/e/_c3AIu6Il" target="_blank" class="hmc-btn">AliExpress ↗</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker">
+  <div class="ticker-inner" id="tickerInner">
+    <span>Free Shipping</span><span class="t-dot">✦</span>
+    <span>Honest Reviews Only</span><span class="t-dot">✦</span>
+    <span>Top Rated Products</span><span class="t-dot">✦</span>
+    <span>Direct from AliExpress</span><span class="t-dot">✦</span>
+    <span>Curated Weekly Picks</span><span class="t-dot">✦</span>
+    <span>Best Price Guarantee</span><span class="t-dot">✦</span>
+    <span>Quality Checked Items</span><span class="t-dot">✦</span>
+    <span>500+ Happy Customers</span><span class="t-dot">✦</span>
+    <span>Free Shipping</span><span class="t-dot">✦</span>
+    <span>Honest Reviews Only</span><span class="t-dot">✦</span>
+    <span>Top Rated Products</span><span class="t-dot">✦</span>
+    <span>Direct from AliExpress</span><span class="t-dot">✦</span>
+    <span>Curated Weekly Picks</span><span class="t-dot">✦</span>
+    <span>Best Price Guarantee</span><span class="t-dot">✦</span>
+    <span>Quality Checked Items</span><span class="t-dot">✦</span>
+    <span>500+ Happy Customers</span><span class="t-dot">✦</span>
+  </div>
+</div>
+
+<!-- Products Section -->
+<section class="products-section" id="products">
+  <div class="section-head reveal">
+    <p class="section-eyebrow">— Honest Picks —</p>
+    <h2>This Week's <em>Favourites</em></h2>
+    <p class="section-sub">Every product is tested or heavily researched. If we wouldn't buy it, we won't list it.</p>
+  </div>
+
+  <div class="filter-bar reveal" id="filterBar">
+    <button class="fbtn active" data-filter="all" onclick="filterProducts('all',this)">All Items</button>
+    <button class="fbtn" data-filter="tech" onclick="filterProducts('tech',this)">Tech & Gadgets</button>
+    <button class="fbtn" data-filter="home" onclick="filterProducts('home',this)">Home & Living</button>
+    <button class="fbtn" data-filter="style" onclick="filterProducts('style',this)">Style</button>
+    <button class="fbtn" data-filter="beauty" onclick="filterProducts('beauty',this)">Beauty</button>
+    <button class="fbtn" data-filter="outdoor" onclick="filterProducts('outdoor',this)">Outdoor</button>
+  </div>
+
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- Features -->
+<section class="features-section" id="about">
+  <div class="features-grid">
+    <div class="feat-item reveal">
+      <div class="feat-num">01</div>
+      <div class="feat-icon">🔍</div>
+      <h4>Honestly Tested</h4>
+      <p>Every pick goes through real-world testing before it makes our list.</p>
+    </div>
+    <div class="feat-item reveal" style="transition-delay:.1s">
+      <div class="feat-num">02</div>
+      <div class="feat-icon">💰</div>
+      <h4>Real Price</h4>
+      <p>Linked directly to AliExpress — no hidden markups, ever.</p>
+    </div>
+    <div class="feat-item reveal" style="transition-delay:.2s">
+      <div class="feat-num">03</div>
+      <div class="feat-icon">⭐</div>
+      <h4>Top Rated</h4>
+      <p>Only products with proven track records make the cut.</p>
+    </div>
+    <div class="feat-item reveal" style="transition-delay:.3s">
+      <div class="feat-num">04</div>
+      <div class="feat-icon">🚀</div>
+      <h4>Weekly Updates</h4>
+      <p>Fresh finds added every week so you never miss a deal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo footer-logo">
+        <span class="logo-mark">HP</span>
+        <span class="logo-text">Honest<em>Pick</em></span>
+      </a>
+      <p>Curated finds from AliExpress, tested and loved. We make affiliate income when you click through — and we only pick things we actually stand behind.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-pill">Instagram</a>
+        <a href="#" class="social-pill">TikTok</a>
+        <a href="#" class="social-pill">YouTube</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Browse</h5>
+      <a href="#">All Products</a>
+      <a href="#">Tech Picks</a>
+      <a href="#">Home Finds</a>
+      <a href="#">Style Picks</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="#">About Us</a>
+      <a href="#">How It Works</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <a href="#">Affiliate Disclosure</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Honest Pick. Built with ♥</span>
+    <span>Affiliate links may earn us a commission.</span>
+  </div>
+</footer>
+
+<!-- Cart Overlay -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Your Cart</h3>
+    <button class="cart-x" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="ce-icon">🛒</div>
+      <p>Your cart is empty</p>
+      <small>Add something beautiful</small>
+    </div>
+  </div>
+  <div class="cart-foot" id="cartFooter" style="display:none">
+    <div class="cart-totals">
+      <div class="ct-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+      <div class="ct-row"><span>Shipping</span><span class="free-tag">Free</span></div>
+      <div class="ct-row ct-total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    </div>
+    <button class="checkout-btn">Proceed to AliExpress →</button>
+    <p class="checkout-note">🔗 You'll be redirected to AliExpress to complete purchase</p>
+  </div>
+</div>
+
+<script>
+// ── PRODUCT DATA ──────────────────────────────────────────────────────
+const products = [
+  {
+    id:1, name:"Automatic Garment Steamer",
+    category:"tech", categoryLabel:"Tech & Gadgets",
+    desc:"Kills germs & bacteria, removes bad smells, refreshes garments in minutes.",
+    price:89.99, oldPrice:110.00, rating:4.7, reviews:2341,
+    badge:"hot", badgeLabel:"Hot",
+    aliLink:"https://s.click.aliexpress.com/e/_c2vJmTux",
+    image:"image1.png"
+  },
+  {
+    id:2, name:"UGREEN Uno USB-C Hub 6-in-1",
+    category:"tech", categoryLabel:"Tech & Gadgets",
+    desc:"4K60Hz, PD 100W, 10Gbps USB 3.2. Perfect dock for MacBook & laptops.",
+    price:22.50, oldPrice:53.00, rating:4.9, reviews:4000,
+    badge:"pick", badgeLabel:"Top Pick",
+    aliLink:"https://s.click.aliexpress.com/e/_c4MWe9WP",
+    image:"image 6.avif"
+  },
+  {
+    id:3, name:"+7pcs Straps Smart Watch 1.52'' AMOLED Screen ",
+    category:"style", categoryLabel:"Style",
+    desc:"RFID-blocking slim cardholder. Holds 8 cards & cash — nothing more needed.",
+    price:6.99, oldPrice:15.00, rating:4.6, reviews:5102,
+    badge:"sale", badgeLabel:"Sale",
+    aliLink:"https://s.click.aliexpress.com/e/_c3AIu6Il",
+    image:"image 3.jpg"
+  },
+  {
+    id:4, name:"Bag Sealing Machine Rechargeable",
+    category:"tech", categoryLabel:"Tech & Gadgets",
+    desc:"Reusable facial rounds and a bamboo tray. Sustainable swap that actually works.",
+    price:4.00, oldPrice:11.00, rating:4.8, reviews:2217,
+    badge:"new", badgeLabel:"New",
+    aliLink:"https://s.click.aliexpress.com/e/_c3N5if5X",
+    image:"image 2.avif"
+  },
+  {
+    id:5, name:"Portable Tripods For Phone Lightweight Camera",
+    category:"tech", categoryLabel:"Tech & Gadgets",
+    desc:"IPX7 waterproof, 20hr battery, surprisingly punchy bass for its size.",
+    price: 7.99, oldPrice:15.00, rating:4.5, reviews:2943,
+    badge:"hot", badgeLabel:"Hot",
+    aliLink:"https://s.click.aliexpress.com/e/_c4e0uC2N",
+    image:"image 7.avif"
+  },
+  {
+    id:6, name:"3-Folding Keyboard Mini Wireless Keyboard",
+    category:"tech", categoryLabel:"Tech & Gadgets",
+    desc:"Compact and portable, perfect for on-the-go productivity.",
+    price:10.50, oldPrice:26.00, rating:4.9, reviews:12007,
+    badge:"pick", badgeLabel:"Top Pick",
+    aliLink:"https://s.click.aliexpress.com/e/_c3yKkQEH",
+    image:"image 8.avif"
+  },
+  {
+    id:7, name:"Ceramic Aroma Diffuser",
+    category:"home", categoryLabel:"Home & Living",
+    desc:"Whisper-quiet ultrasonic diffuser with warm ambient light. 400ml tank.",
+    price:19.99, oldPrice:38.00, rating:4.7, reviews:1890,
+    badge:"new", badgeLabel:"New",
+    aliLink:"https://www.aliexpress.com/",
+    image:null
+  },
+  {
+    id:8, name:"Foldable Camping Lantern",
+    category:"outdoor", categoryLabel:"Outdoor",
+    desc:"Solar + USB rechargeable. Collapses flat. 3 brightness modes, IPX4 rated.",
+    price:14.99, oldPrice:28.00, rating:4.6, reviews:3421,
+    badge:"sale", badgeLabel:"Sale",
+    aliLink:"https://www.aliexpress.com/",
+    image:null
+  }
+];
+
+// ── CART ──────────────────────────────────────────────────────────────
+let cart = [];
+
+// ── RENDER PRODUCTS ───────────────────────────────────────────────────
+function renderProducts(filter='all') {
+  const grid = document.getElementById('productGrid');
+  const list = filter==='all' ? products : products.filter(p=>p.category===filter);
+
+  grid.innerHTML = list.map((p,i)=>`
+    <div class="product-card reveal" data-id="${p.id}" style="transition-delay:${i*0.07}s">
+      <div class="pc-img">
+        ${p.image
+          ? `<img src="${p.image}" alt="${p.name}" onerror="this.parentNode.innerHTML=getPlaceholder('${p.categoryLabel}')">`
+          : getPlaceholder(p.categoryLabel)
+        }
+        ${p.badgeLabel ? `<span class="pc-badge badge-${p.badge}">${p.badgeLabel}</span>` : ''}
+        <button class="pc-wish" onclick="toggleWish(this)">♡</button>
+        <div class="pc-img-hover">
+          <a href="${p.aliLink}" target="_blank" class="quick-view-btn">View on AliExpress ↗</a>
+        </div>
+      </div>
+      <div class="pc-body">
+        <h3 class="pc-name">${p.name}</h3>
+        <div class="pc-footer">
+          <div class="pc-price">
+            <span class="price-now">$${p.price.toFixed(2)}</span>
+            ${p.oldPrice ? `<span class="price-was">$${p.oldPrice.toFixed(2)}</span>` : ''}
+            ${p.oldPrice ? `<span class="price-save">-${Math.round((1-p.price/p.oldPrice)*100)}%</span>` : ''}
+          </div>
+          <div class="pc-actions">
+            <a href="${p.aliLink}" target="_blank" class="btn-ali">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14l-4-4 1.41-1.41L11 13.17l6.59-6.59L19 8l-8 8z"/></svg>
+              AliExpress
+            </a>
+            <button class="btn-cart" onclick="addToCart(${p.id})" title="Add to cart">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  setTimeout(()=>{
+    document.querySelectorAll('.product-card').forEach(c=>c.classList.add('visible'));
+  },60);
+}
+
+function getPlaceholder(label) {
+  const map = {'Tech & Gadgets':'📱','Home & Living':'🏠','Style':'👜','Beauty':'✨','Outdoor':'🏕️'};
+  const e = map[label] || '🛍️';
+  return `<div class="pc-placeholder"><span>${e}</span><small>${label}</small></div>`;
+}
+
+function renderStars(r) {
+  return Array.from({length:5},(_,i)=>
+    `<span class="star ${i<Math.floor(r)?'on':''}">★</span>`
+  ).join('');
+}
+
+// ── FILTER ────────────────────────────────────────────────────────────
+function filterProducts(f, btn) {
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(c=>{c.classList.remove('visible');});
+  setTimeout(()=>renderProducts(f), 180);
+}
+
+// ── CART ─────────────────────────────────────────────────────────────
+function addToCart(id) {
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  const ex = cart.find(c=>c.id===id);
+  ex ? ex.qty++ : cart.push({...p, qty:1});
+  updateCart();
+  showToast(`"${p.name}" added!`);
+  const btn = document.querySelector(`[data-id="${id}"] .btn-cart`);
+  if(btn){ btn.classList.add('added'); setTimeout(()=>btn.classList.remove('added'),1000); }
+}
+
+function removeFromCart(id) { cart=cart.filter(c=>c.id!==id); updateCart(); drawCartItems(); }
+function changeQty(id,d) { const i=cart.find(c=>c.id===id); if(i){i.qty=Math.max(1,i.qty+d);} updateCart(); drawCartItems(); }
+
+function updateCart() {
+  document.getElementById('cartCount').textContent = cart.reduce((s,c)=>s+c.qty,0);
+  const sub = cart.reduce((s,c)=>s+c.price*c.qty,0);
+  document.getElementById('cartSubtotal').textContent = `$${sub.toFixed(2)}`;
+  document.getElementById('cartTotal').textContent = `$${sub.toFixed(2)}`;
+  document.getElementById('cartFooter').style.display = cart.length?'block':'none';
+  document.getElementById('cartEmpty').style.display = cart.length?'none':'flex';
+  drawCartItems();
+}
+
+function drawCartItems() {
+  const container = document.getElementById('cartItems');
+  container.querySelectorAll('.cart-item').forEach(e=>e.remove());
+  const empty = document.getElementById('cartEmpty');
+  cart.forEach(item=>{
+    const d = document.createElement('div');
+    d.className='cart-item';
+    d.innerHTML=`
+      <div class="ci-img">
+        ${item.image ? `<img src="${item.image}" alt="${item.name}" onerror="this.parentNode.innerHTML='<div class=\\'pc-placeholder\\'><span>🛍️</span></div>'">` : '<div class="pc-placeholder"><span>🛍️</span></div>'}
+      </div>
+      <div class="ci-info">
+        <p class="ci-cat">${item.categoryLabel}</p>
+        <p class="ci-name">${item.name}</p>
+        <div class="ci-row">
+          <div class="qty-ctrl">
+            <button onclick="changeQty(${item.id},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${item.id},+1)">+</button>
+          </div>
+          <span class="ci-price">$${(item.price*item.qty).toFixed(2)}</span>
+        </div>
+        <button class="ci-remove" onclick="removeFromCart(${item.id})">Remove</button>
+      </div>`;
+    container.insertBefore(d, empty);
+  });
+}
+
+function openCart() { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); document.body.style.overflow=''; }
+
+// ── SEARCH ────────────────────────────────────────────────────────────
+function openSearch() {
+  document.getElementById('searchOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('searchModalInput').focus(),200);
+}
+function closeSearch() {
+  document.getElementById('searchOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  clearSearch();
+}
+function clearSearch() {
+  document.getElementById('searchModalInput').value='';
+  document.getElementById('searchResults').style.display='none';
+  document.getElementById('searchEmpty').style.display='none';
+  document.getElementById('searchTrending').style.display='block';
+  document.getElementById('searchClear').style.opacity='0';
+}
+function doSearch(q) {
+  document.getElementById('searchModalInput').value=q;
+  liveSearch(q);
+}
+function liveSearch(q) {
+  const trending = document.getElementById('searchTrending');
+  const results = document.getElementById('searchResults');
+  const empty = document.getElementById('searchEmpty');
+  const grid = document.getElementById('searchResultsGrid');
+  const clear = document.getElementById('searchClear');
+  const label = document.getElementById('searchResultLabel');
+  clear.style.opacity = q.length>0?'1':'0';
+  if(q.length<1){ trending.style.display='block'; results.style.display='none'; empty.style.display='none'; return; }
+  trending.style.display='none';
+  const matches = products.filter(p=>
+    p.name.toLowerCase().includes(q.toLowerCase())||
+    p.categoryLabel.toLowerCase().includes(q.toLowerCase())||
+    p.desc.toLowerCase().includes(q.toLowerCase())
+  );
+  if(matches.length===0){ results.style.display='none'; empty.style.display='block'; return; }
+  empty.style.display='none';
+  label.textContent = `${matches.length} result${matches.length!==1?'s':''} for "${q}"`;
+  grid.innerHTML = matches.map(p=>`
+    <div class="sr-card" onclick="jumpToProduct(${p.id})">
+      <div class="sr-img">
+        ${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.parentNode.innerHTML='<div class=\\'sr-placeholder\\'>🛍️</div>'">` : `<div class="sr-placeholder">${p.category==='tech'?'📱':p.category==='style'?'👜':p.category==='beauty'?'✨':p.category==='home'?'🏠':'🏕️'}</div>`}
+      </div>
+      <div class="sr-info">
+        <p class="sr-cat">${p.categoryLabel}</p>
+        <p class="sr-name">${p.name.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>')}</p>
+        <div class="sr-price">
+          <span>$${p.price.toFixed(2)}</span>
+          ${p.oldPrice?`<s>$${p.oldPrice.toFixed(2)}</s>`:''}
+        </div>
+      </div>
+      <div class="sr-arrow">↗</div>
+    </div>`).join('');
+  results.style.display='block';
+}
+
+function jumpToProduct(id) {
+  closeSearch();
+  setTimeout(()=>{
+    const card = document.querySelector(`[data-id="${id}"]`);
+    if(card){ card.scrollIntoView({behavior:'smooth',block:'center'}); card.classList.add('highlight'); setTimeout(()=>card.classList.remove('highlight'),2000); }
+  },300);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeSearch();
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){ e.preventDefault(); openSearch(); }
+});
+
+document.getElementById('searchOverlay').addEventListener('click',e=>{
+  if(e.target===document.getElementById('searchOverlay')) closeSearch();
+});
+
+// ── WISHLIST ──────────────────────────────────────────────────────────
+function toggleWish(btn) {
+  btn.classList.toggle('liked');
+  btn.textContent = btn.classList.contains('liked')? '♥' : '♡';
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── CURSOR ────────────────────────────────────────────────────────────
+const cur=document.getElementById('cursor'), ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.transform=`translate(${mx-5}px,${my-5}px)`;});
+(function animRing(){rx+=(mx-rx-18)*0.12;ry+=(my-ry-18)*0.12;ring.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(animRing);})();
+document.querySelectorAll('a,button,.product-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='56px';ring.style.height='56px';ring.style.opacity='0.2';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.5';});
+});
+
+// ── SCROLL ────────────────────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  document.getElementById('header').classList.toggle('scrolled',scrollY>50);
+  document.querySelectorAll('.reveal').forEach(el=>{
+    if(el.getBoundingClientRect().top<innerHeight*0.9) el.classList.add('visible');
+  });
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────
+renderProducts();
+setTimeout(()=>{
+  document.querySelectorAll('.section-head,.filter-bar').forEach(el=>{
+    if(el.getBoundingClientRect().top<innerHeight) el.classList.add('visible');
+  });
+},150);
+</script>
+</body>
+</html>
