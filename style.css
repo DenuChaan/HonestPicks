@@ -169,7 +169,7 @@ nav a:hover::after { width:100%; }
   color:var(--dark); margin-bottom:24px;
   opacity:0; animation:slideUp .7s ease .4s forwards;
 }
-.hero h1 em { font-style:italic; color:var(--coral); display:block; }
+.hero h1 em { font-style:italic; color:var(--coral); display:block; } {align-items:center;}
 
 .hero-sub {
   font-size:16px; line-height:1.75; color:var(--mid);
@@ -304,7 +304,7 @@ h2 em { font-family:qs; color:var(--coral); }
 .fbtn {
   padding:9px 22px; border-radius:100px;
   border:1.5px solid var(--border); background:white;
-  color:var(--mid); font-size:13px; font-family:var(--font-body);
+  color:var(--mid); font-size:13px; font-family:cos;
   font-weight:500; cursor:pointer; transition:all .3s; letter-spacing:.02em;
 }
 .fbtn:hover { border-color:var(--coral); color:var(--coral); background:var(--coral-lt); }
@@ -312,9 +312,9 @@ h2 em { font-family:qs; color:var(--coral); }
 
 /* ── PRODUCT GRID ───────────────────────────────────────────── */
 .product-grid {
-  display:grid;
-  grid-template-columns:repeat(5, 1fr);
-  gap:24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: clamp(10px, 2vw, 24px);
 }
 
 /* ── PRODUCT CARD ────────────────────────────────────────────── */
@@ -324,7 +324,7 @@ h2 em { font-family:qs; color:var(--coral); }
   transition:all .45s cubic-bezier(.23,1,.32,1);
   opacity:0; transform:translateY(28px);
   position:relative;
-  box-shadow: 0 4px 20px rgba(28,22,18,.08);
+  box-shadow: 0 40px 200px rgba(7, 4, 2, 0.08);
 }
 .product-card.visible { opacity:1; transform:none; }
 .product-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); border-color:transparent; }
@@ -905,4 +905,76 @@ footer { background:var(--dark); padding:80px 48px 40px; }
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(232,53,26,.35);
   filter: brightness(1.07);
+}
+
+.hero-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+background-color: var(--muted);
+border-radius: 22px;
+height: 800px;
+width: 550px;
+}
+
+.redd {
+  color: red;
+}
+
+/* Dark Section Styling */
+.dark-section {
+    background-color: var(--dark);
+    border-radius: var(--radius-lg);
+    margin: 40px auto;
+    padding: 80px 48px;
+}
+
+.dark-section .section-eyebrow {
+    color: var(--gold);
+}
+
+.dark-section h2 {
+    color: var(--white);
+}
+
+.dark-section .section-sub {
+    color: var(--muted);
+}
+
+/* Dark Card Specific Overrides */
+.dark-card {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark-card .pc-name {
+    color: var(--white) !important;
+}
+
+.dark-card .pc-price {
+    color: var(--white) !important;
+}
+
+.dark-card .pc-img {
+    background: #241d18; /* Slightly lighter than --dark */
+}
+
+.dark-card .pc-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-card .btn-cart {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+.dark-card:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* For the Favourites Grid using your styles */
+.dark-card .btn-ali {
+    background: linear-gradient(135deg, var(--coral), var(--coral-dk));
 }

@@ -115,17 +115,27 @@
     </div>
 
     <!-- HERO Product Grid -->
+     <section class="special-deals-container">
+    <h2 class="section-title">Special Deals</h2>
 <div class="hero-product-grid">
   <div class="hero-mini-card">
     <div class="hmc-img"><img src="image 3.jpg" alt="Garment Steamer"></div>
     <div class="hmc-info">
       <p class="hmc-name">+7pcs Straps Smart Watch 1.52</p>
-      <div class="hmc-price"><span>$06.99</span><s>$15.00</s><span class="hmc-save">-18%</span></div>
+      <div class="hmc-price"><span>$06.99</span><s>$15.00</s><span class="hmc-save">-58%</span></div>
       <a href="https://s.click.aliexpress.com/e/_c3AIu6Il" target="_blank" class="hmc-btn">AliExpress ↗</a>
     </div>
   </div>
 
-  <div class="hero-mini-card">
+    <div class="hero-mini-card">
+      <div class="hmc-img"><img src="image 11.avif" alt="Phone Magnifier"></div>
+      <div class="hmc-info">
+        <p class="hmc-name">Phone Magnifier Ultra-HD Screen Magnifier </p>
+        <div class="hmc-price"><span>$3.49</span><s>$9.00</s><span class="hmc-save">-68%</span></div>
+        <a href="https://s.click.aliexpress.com/e/_c2vYIsBF" target="_blank" class="hmc-btn">AliExpress ↗</a>
+      </div>
+    </div>
+    <div class="hero-mini-card">
     <div class="hmc-img"><img src="image 6.avif" alt="USB-C Hub"></div>
     <div class="hmc-info">
       <p class="hmc-name">USB-C Hub 6-in-1</p>
@@ -143,15 +153,10 @@
     </div>
   </div>
 
-  <div class="hero-mini-card">
-    <div class="hmc-img"><img src="image1.png" alt="Smart Watch"></div>
-    <div class="hmc-info">
-      <p class="hmc-name">Garment Steamer</p>
-      <div class="hmc-price"><span>$89.49</span><s>$110.00</s><span class="hmc-save">-18%</span></div>
-      <a href="https://s.click.aliexpress.com/e/_c3AIu6Il" target="_blank" class="hmc-btn">AliExpress ↗</a>
-    </div>
+  
   </div>
 </div>
+     </div>
 </section>
 
 <!-- Ticker -->
@@ -190,7 +195,7 @@
     <button class="fbtn" data-filter="home" onclick="filterProducts('home',this)">Home & Living</button>
     <button class="fbtn" data-filter="style" onclick="filterProducts('style',this)">Style</button>
     <button class="fbtn" data-filter="beauty" onclick="filterProducts('beauty',this)">Beauty</button>
-    <button class="fbtn" data-filter="outdoor" onclick="filterProducts('outdoor',this)">Outdoor</button>
+    <button class="fbtn" data-filter="fashion" onclick="filterProducts('fashion',this)">Fashion</button>
   </div>
 
   <div class="product-grid" id="productGrid"></div>
@@ -350,24 +355,34 @@ const products = [
     image:"image 8.avif"
   },
   {
-    id:7, name:"Ceramic Aroma Diffuser",
-    category:"home", categoryLabel:"Home & Living",
+    id:7, name:"Training Bra for Girls ",
+    category:"fashion", categoryLabel:"Fashion",
     desc:"Whisper-quiet ultrasonic diffuser with warm ambient light. 400ml tank.",
-    price:19.99, oldPrice:38.00, rating:4.7, reviews:1890,
+    price:2.99, oldPrice:8.00, rating:4.7, reviews:1890,
     badge:"new", badgeLabel:"New",
-    aliLink:"https://www.aliexpress.com/",
-    image:null
+    aliLink:"https://s.click.aliexpress.com/e/_c4tVqqhJ",
+    image:"image 10.avif"
   },
   {
-    id:8, name:"Foldable Camping Lantern",
-    category:"outdoor", categoryLabel:"Outdoor",
-    desc:"Solar + USB rechargeable. Collapses flat. 3 brightness modes, IPX4 rated.",
-    price:14.99, oldPrice:28.00, rating:4.6, reviews:3421,
+    id:8, name:"Phone Magnifier Ultra-HD Screen Magnifier ",
+    category:"tech", categoryLabel:"Tech & Gadgets",
+    desc:"Solar + USB rechargeable. Collapses flat.",
+    price:3.50, oldPrice:9.00, rating:4.6, reviews:3421,
     badge:"sale", badgeLabel:"Sale",
+    aliLink:"https://s.click.aliexpress.com/e/_c2vYIsBF",
+    image:"image 11.avif",
+  },           // ← මේ comma add කරන්න
+  {
+    id:9, name:"New Product Name",
+    category:"tech", categoryLabel:"Tech & Gadgets",
+    desc:"Product description here.",
+    price:19.99, oldPrice:35.00, rating:4.5, reviews:100,
+    badge:"new", badgeLabel:"New",
     aliLink:"https://www.aliexpress.com/",
-    image:null
-  }
+    image:"image9.jpg"
+  }            // ← last එකට comma එපා
 ];
+
 
 // ── CART ──────────────────────────────────────────────────────────────
 let cart = [];
